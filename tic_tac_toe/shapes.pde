@@ -29,7 +29,7 @@ void drawBoard() {
  }
  
  void draw0(int x, int y) {
-   no fill();
+   noFill();
    stroke(0);
    strokeWeight(6);
    
