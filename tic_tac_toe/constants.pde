@@ -11,3 +11,4 @@ final int game_in_play = 0;
 final int computer_won = 1;
 final int user_won = 2;
 final int draw = 3;
+int gameState= 0;

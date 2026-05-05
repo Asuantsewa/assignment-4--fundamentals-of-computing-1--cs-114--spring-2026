@@ -10,5 +10,5 @@ void draw() {
   drawMoves();  
 }
 void keyPressed() {
-   handleKeyPressed(key);
+   handleKeyPress(key);
 }

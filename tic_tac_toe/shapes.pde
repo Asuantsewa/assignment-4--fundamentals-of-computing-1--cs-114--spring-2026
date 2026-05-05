@@ -3,7 +3,7 @@ void drawBoard() {
   strokeWeight (4);
   
   line(cell_size, 0, cell_size, height);
-  line( cell_size * 2, width, cell_size *2);
+  line( cell_size * 2.0, 0, width, cell_size *2.0);
 }
  void drawMoves(){
    for(int i = 0; i < 9; i++){
