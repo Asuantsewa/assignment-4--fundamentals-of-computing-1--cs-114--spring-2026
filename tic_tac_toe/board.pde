@@ -1,101 +1,74 @@
-int[] board = new int[9];
+char[] board = new char[9];
+boolean gameEnded = false;
 
-void initializeBoard() {
-  for (int i = 0; i <9; i++) {
-    board[i] = blank;
+void initializeGame() {
+  for (int i = 0; i < 9; i++) {
+    board[i] = empty;
   }
-  gameState = game_in_play;
-}
 
+  computerMove();
+}
 
 void handleKeyPress(char pressedKey) {
-  if (gameState != game_in_play) {
-    println(" The game has ended") ;
+  if (gameEnded) {
+    println("The game has ended.");
     return;
   }
 
-
-  int square = pressedKey - '0';
-  if (board[square] != blank) {
-    println(" That square is already taken. ");
-    return;
-  }
-  board [square] = user;
-  updateGameState();
-
-  if (gameState == user_won) {
-    println("The user has won. ");
+  if (pressedKey < '0' || pressedKey > '8') {
+    println("Incorrect key. Press a number from 0 through 8.");
     return;
   }
 
-  if (gameState == draw) {
-    println("No one has won");
+  int position = pressedKey - '0';
+
+  if (board[position] != empty) {
+    println("That square is already taken.");
     return;
   }
-  computerTurn();
-  updateGameState ();
 
-  if (gameState == computer_won) {
-    println("The computer has won");
-  } else if (gameState == draw) {
+  board[position] = user;
+
+  if (checkWinner(user)) {
+    println("The user has won.");
+    gameEnded = true;
+    return;
+  }
+
+  if (isBoardFull()) {
     println("No one has won.");
-  } else {
-    println("The game is still in play.");
-  }
-}
-
-void computerTurn() {
-  if (gameState != game_in_play) {
+    gameEnded = true;
     return;
   }
-  int move = findWinningMove(computer);
 
-  if (move == -1) {
-    move = findWinningMove(user);
+  computerMove();
+
+  if (checkWinner(computer)) {
+    println("The computer has won.");
+    gameEnded = true;
+    return;
   }
-  if (move == -1 && board[4] == blank) {
-    move = 4;
+
+  if (isBoardFull()) {
+    println("No one has won.");
+    gameEnded = true;
+    return;
   }
-  if (move == -1) {
-    move = firstBlankSquare();
-    array.findIndex(cell = cell == null)
+
+  println("The game is still in play.");
 }
-  if (move != -1) {
-    board[move] = computer;
-  }
- }
 
-int findWinningMove(int player) {
-
-
+void computerMove() {
   for (int i = 0; i < 9; i++) {
-    if (board[i] == blank) {
-      board[i] = player;
-
-      boolean wins = checkWinner(player);
-      board[i] = blank;
-      if (wins) {
-        return i;
-      }
+    if (board[i] == empty) {
+      board[i] = computer;
+      return;
     }
   }
-  return -1;
 }
-;
 
-void updateGameState() {
-  if (checkWinner (computer)) {
-    gameState = computer_won;
-  } else if (checkWinner (user)) {
-    gameState = user_won;
-  } else if (boardIsFull()) {
-    gameState = draw;
-  } else {
-    gameState = game_in_play;
-  }
-}
-boolean checkWinner(int player) {
-  int[][] wins = {
+boolean checkWinner(char player) {
+  int[][] winningLines = {
     {0, 1, 2},
     {3, 4, 5},
     {6, 7, 8},
@@ -106,22 +79,25 @@ boolean checkWinner(int player) {
     {2, 4, 6}
   };
 
-  for (int i = 0; i < wins.length; i++) {
-    if (board[wins[i][0]] == player &&
-      board[wins[i][1]] == player &&
-      board[wins[i][2]] == player
-      ) {
+  for (int i = 0; i < winningLines.length; i++) {
+    int a = winningLines[i][0];
+    int b = winningLines[i][1];
+    int c = winningLines[i][2];
+
+    if (board[a] == player && board[b] == player && board[c] == player) {
       return true;
     }
   }
+
   return false;
 }
 
-boolean boardIsFull() {
+boolean isBoardFull() {
   for (int i = 0; i < 9; i++) {
-    if (board [ i ] == blank) {
+    if (board[i] == empty) {
       return false;
     }
   }
+
   return true;
- }
+}
