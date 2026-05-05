@@ -14,7 +14,7 @@ void drawBoard() {
      int y = row * cell_size;
      
      if (board[i] == computer){
-       drawX(x, y);
+       draw(x, y);
      }
    }
  }

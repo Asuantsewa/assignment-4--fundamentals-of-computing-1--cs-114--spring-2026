@@ -1,9 +1,11 @@
 int[] board = new int[9];
 int gameState = game_in_play;
+  gameState = gameInPlay;
 void initializeBoard() {
   for (int i = 0; i <9; i++){
     board[i] = blank;
   }
+  int gameState = game_in_play;
   gameState = game_in_play;
 }
 
@@ -21,7 +23,7 @@ if (board[square] != blank) {
   return; 
 }
 board [square] = user;
-updateGamestate();
+updateGameState();
 
 if (gameState == user_won) {
   println("The user has won. ");
@@ -29,7 +31,7 @@ if (gameState == user_won) {
 }
 
 if (gameState == draw) {
-  printlln("No one has won");
+  println("No one has won");
   return;
 } 
 computerTurn();
@@ -48,18 +50,18 @@ updateGameState ();
    if (gameState != game_in_play) {
      return;
    }
-   int move = fingWinningMove(Computer);
+   int move = findingWinningMove(computer);
    
    if (move == -1) {
      move = findingWinningMove(user);
    }
-   if (move == -1 && board[4] == BLANK) {
+   if (move == -1 && board[4] == blank) {
      move = 4;
 }
    if (move == -1) {
      move = firstBlankSquare();
    if (move != -1) {
-     board[move] = COMPUTER;
+     board[move] = computer;
    }
 }
  }
@@ -69,11 +71,11 @@ int findWinningMove(int player) {
 
   
   for (int i = 0; i < 9; i++) {
-      if (board[i] == BLANK) {
-        boardl[i] = player;
+    if (board[i] == blank) {
+        board[i] = player;
        
        boolean wins = checkWinner(player);
-       board[i] = BLANK;
+       board[i] = blank;
        if (wins) {
           return i;
        }
@@ -84,12 +86,12 @@ int findWinningMove(int player) {
 ;
 
 void updateGameState() {
-  if (checkWinner (COMPUTER)) {
-    gameState = COMPUTER_WON;
-  } else if (checkWinner (USER)) {
-    gameState = USER_WON;
+  if (checkWinner (computer)) {
+    gameState = computer_won;
+  } else if (checkWinner (user)) {
+    gameState = user_won;
   } else if (boardIsFull()) {
-     gameState = DRAW;
+     gameState = draw;
   } else {
      gameState = game_in_play;
   }
@@ -105,7 +107,8 @@ boolean checkWinner(int player) {
 {0, 4, 8},
 {2,4,  6}
 };
-          for(int i = 0; i‹(wins.length) i++;){
+
+for(int i = 0; i < wins.length; i++){
    if (board[wins[i][0]] == player && 
        board[wins[i][1]] == player &&
        board[wins[i][2]] == player
