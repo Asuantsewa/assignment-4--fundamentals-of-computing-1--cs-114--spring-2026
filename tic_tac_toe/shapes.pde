@@ -41,4 +41,4 @@ void drawBoard() {
    cell_size - padding * 2,
    cell_size - padding * 2
    );
-   
+ }
